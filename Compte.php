@@ -1,4 +1,5 @@
 <?php
+
     class Compte{
         private string $_libelle;
         private float $_solde;
@@ -11,10 +12,11 @@
             $this->_solde = $solde;
             $this->_devise = $devise;
             $this->_titulaire = $titulaire;
+            $titulaire->addComptes($this);
         }
         public function __toString()
         {
-            return->_titulaire;
+            return $this->_titulaire;
         }
         
         public function getLibelle()
@@ -35,22 +37,35 @@
         }
 
         
-        public function set($libelle)
+        public function setLibelle($libelle)
         {
             $this->_libelle = $libelle;
         }
-        public function set($solde)
+        public function setSolde($solde)
         {
             $this->_solde = $solde;
         }
-        public function set($devise)
+        public function setDevise($devise)
         {
             $this->_devise = $devise;
         }
-        public function set($titulaire)
+        public function setTitulaire($titulaire)
         {
             $this->_titulaire = $titulaire;
         }
-        
+
+        public function credit(float $nb)
+        {
+            $this->_solde = $this->_solde + $nb;
+        }
+        public function debit(float $nb)
+        {
+            $this->_solde = $this->_solde - $nb;
+        }
+        public function virement(Compte $b, float $nb)
+        {
+            $this->debit($nb);
+            $b->credit($nb);
+        }
     }
 ?>

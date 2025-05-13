@@ -3,22 +3,18 @@
         private string $_nom;
         private string $_prenom;
         private DateTime $_dateDeNaissance;
-        private DateTime $_age;
+        private int $_age;
         private string $_ville;
-        private Compte $_comptes;
+        private array $_comptes;
 
-        public function __construct(string $nom, string $prenom, string $dateDeNaissance, string $ville, Compte $comptes)
+        public function __construct(string $nom, string $prenom, string $dateDeNaissance, string $ville)
         {
             $this->_nom = $nom;
             $this->_prenom = $prenom;
-            $this->_dateDeNaissance = new DateTime($dateDeNaissance)
+            $this->_dateDeNaissance = new DateTime($dateDeNaissance);
+            $this->_age = 0;
             $this->_ville = $ville;
-            $this->_comptes = $comptes;
-
-            $aujourdHui = new DateTime();
-            $diff = $this->dateDeNaissance->diff($aujourdHui);
-
-            $this->_age = $diff->y;
+            $this->_comptes = [];
         }
         public function __toString()
         {
@@ -42,11 +38,6 @@
         {
             return $this->_ville;
         }
-        public function getNom()
-        {
-            return $this->_comptes;
-        }
-
 
         public function setNom($nom)
         {
@@ -58,7 +49,7 @@
         }
         public function setDateDeNaissance($dateDeNaissance)
         {
-            $this->_dateDeNaissance = $dateDeNaissance
+            $this->_dateDeNaissance = $dateDeNaissance;
         }
         public function setVille($ville)
         {
@@ -67,6 +58,18 @@
         public function setCompte($comptes)
         {
             $this->_comptes = $comptes;
+        }
+
+        public function addComptes(Compte $comptes)
+        {
+            $this->_comptes[] = $comptes;
+        }
+        // fonction qui permet de calculer age
+        public function calcAge()
+        {
+            $aujourdHui = new DateTime();
+            $diff = $this->_dateDeNaissance->diff($aujourdHui);
+            return $this->_age = $diff->y;
         }
     }
 ?>
